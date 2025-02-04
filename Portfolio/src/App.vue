@@ -1,29 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Card from '@/components/Card.vue'
+import Button from './components/Button.vue';
+import Input from './components/Input.vue';
+</script>
 
 <template>
-  <!--  <Card></Card>-->
-
-  <!--  <div style="display: flex; height: 100%; align-items: center;">-->
-  <!--    <Button></Button>-->
-  <!--    <div style="margin: 10px;"></div>-->
-  <!--    <Input></Input>-->
-  <!--  </div>-->
-
-  <div class="container text-center">
-    <div class="row">
-      <div class="col">
-        Column
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <Card></Card>
       </div>
-      <div class="col">
-        Column
+    </div>
+    <div class="row mt-5 justify-content-center">
+      <div class="col-6">
+        <Input></Input>
       </div>
-      <div class="col">
-        Column
+      <div class="col-auto">
+        <Button></Button>
       </div>
     </div>
   </div>
+
+
 </template>
 
 <style scoped>
-
 </style>

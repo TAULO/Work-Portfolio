@@ -3,24 +3,26 @@
 </script>
 
 <template>
-  <div class="input-container">
-    <div class="input-shadow"></div>
-    <input class="input" placeholder="test.test@test.test"></input>
+  <div class="custom-input-container">
+    <div class="custom-input-shadow"></div>
+    <input class="custom-input text-center text-md-start ps-md-4" placeholder="test.test@test.test"></input>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
-.input-container {
+$input-shadow-size: .2rem;
+
+.custom-input-container {
   position: relative;
 
+  width: 100%;
   height: 50px;
-  width: 500px;
 
-  border-radius: 0.3rem;
+  border-radius: .3rem;
 }
 
-.input {
+.custom-input {
   border-radius: inherit;
   height: inherit;
   width: inherit;
@@ -30,21 +32,26 @@
   box-sizing: border-box;
   outline: none;
 
-  padding-left: 1.5rem;
+  transition: transform 400ms ease-out;
 
   border: 3px solid black;
 }
 
-.input-shadow {
+.custom-input-shadow {
   background-color: black;
   height: inherit;
   width: inherit;
   border-radius: inherit;
 
-  transform: translate(0.2rem, 0.2rem);
+  transform: translate($input-shadow-size, $input-shadow-size);
 
   position: absolute;
   z-index: -1;
+}
+
+input:focus {
+  transform: translate($input-shadow-size, $input-shadow-size);
+  z-index: 10;
 }
 
 </style>

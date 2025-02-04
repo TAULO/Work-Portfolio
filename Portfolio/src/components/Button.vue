@@ -1,26 +1,27 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
-  <div class="button-container">
-    <div class="button-shadow"></div>
-    <button class="button">TEST</button>
+  <div class="custom-button-container">
+    <div class="custom-button-shadow"></div>
+    <button class="custom-button">TEST</button>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
-.button-container {
+$button-shadow-size: .2rem;
+
+.custom-button-container {
   position: relative;
 
   height: 50px;
   width: 100px;
 
-  border-radius: 0.3rem;
+  border-radius: .3rem;
 }
 
-.button {
+.custom-button {
   background-color: rgb(255 196 128);
   padding: 0;
   margin: 0;
@@ -28,16 +29,18 @@
   width: inherit;
   border-radius: inherit;
 
+  transition: transform 400ms ease-out;
+
   border: 3px solid black;
 }
 
-.button-shadow {
+.custom-button-shadow {
   background-color: black;
   height: inherit;
   width: inherit;
   border-radius: inherit;
 
-  transform: translate(0.2rem, 0.2rem);
+  transform: translate($button-shadow-size, $button-shadow-size);
 
   position: absolute;
   z-index: -1;
@@ -45,6 +48,11 @@
 
 .button:hover {
   cursor: pointer;
+  transform: translate($button-shadow-size, $button-shadow-size);
+}
+
+.button:active {
+  opacity: .9;
 }
 
 </style>
