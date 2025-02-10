@@ -1,4 +1,6 @@
 <script setup lang="ts">
+
+
 </script>
 
 <template>
@@ -46,12 +48,12 @@ $button-shadow-size: .2rem;
   z-index: -1;
 }
 
-.button:hover {
+.custom-button:hover {
   cursor: pointer;
   transform: translate($button-shadow-size, $button-shadow-size);
 }
 
-.button:active {
+.custom-button:active {
   opacity: .9;
 }
 
