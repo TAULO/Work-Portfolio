@@ -1,11 +1,21 @@
-import { JSDOM } from 'jsdom';
+import { JSDOM } from 'jsdom'
 
 export default async function foo() {
-  const dom = new JSDOM(`<!DOCTYPE html><p>Hello</p>`);
-  const response = await fetch("https://github.com/users/TAULO/contributions");
-  const htmlAsText = await response.text();
-  const parser = new dom.window.DOMParser();
-  const doc = parser.parseFromString(htmlAsText, "text/html");
+  const dom = new JSDOM(`<!DOCTYPE html><p>Hello</p>`)
+  const response = await fetch('https://github.com/users/TAULO/contributions')
+  const htmlAsText = await response.text()
+  const parser = new dom.window.DOMParser()
+  const doc = parser.parseFromString(htmlAsText, 'text/html')
+
+  const weeks: WeekSchedule = {
+    sunday: [],
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: [],
+  }
 
   interface ContributionToolTip {
     forAttribute: string | null;
@@ -18,28 +28,40 @@ export default async function foo() {
     level: string | null;
   }
 
-  const contributionToolTips: ContributionToolTip[] = [...doc.querySelectorAll("tool-tip")].map(toolTip => ({
-    forAttribute: toolTip.getAttribute("for"),
-    text: toolTip.textContent,
-  }));
+  type WeekSchedule = {
+    sunday: Contribution[];
+    monday: Contribution[];
+    tuesday: Contribution[];
+    wednesday: Contribution[];
+    thursday: Contribution[];
+    friday: Contribution[];
+    saturday: Contribution[];
+  };
 
-  const contributionCalender: Contribution[] = [...doc.querySelectorAll(".ContributionCalendar-day")].map(contribution => ({
-    id: contribution.getAttribute("id"),
-    date: contribution.getAttribute("data-date"),
-    level: contribution.getAttribute("data-level"),
-  })).filter(contribution => contribution.date);
+  const contributionToolTips: ContributionToolTip[] = [...doc.querySelectorAll('tool-tip')].map(toolTip => ({
+    forAttribute: toolTip.getAttribute('for'),
+    text: toolTip.textContent
+  }))
 
+  const contributionCalender: Contribution[] = [...doc.querySelectorAll('.ContributionCalendar-day')].map(contribution => ({
+    id: contribution.getAttribute('id'),
+    date: contribution.getAttribute('data-date'),
+    level: contribution.getAttribute('data-level')
+  })).filter(contribution => contribution.date)
 
-  const contributionCalenderChunks: Contribution[][] = contributionCalender.reduce(
-    (acc: Contribution[][], item: Contribution, index): Contribution[][] => {
-      if (index % 53 === 0) acc.push([]);
-      acc[acc.length - 1].push(item);
+  const contributionCalenderWeekChunks = contributionCalender.reduce((acc: any, item: Contribution): any => {
+    const date = new Date(item.date ?? "").getDay()
 
-      return acc;
-    },
-    []
-  );
+    Object.keys(weeks).forEach((key, index) => {
+      if (date === index) {
+        if (!acc[key]) acc[key] = []
+        acc[key].push(item)
+      }
+    })
 
-  return { contributionCalender, contributionToolTips, contributionCalenderChunks }
+    return acc
+  }, {})
+
+  return { contributionCalender, contributionToolTips, contributionCalenderWeekChunks }
 }
 
